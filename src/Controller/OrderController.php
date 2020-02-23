@@ -12,6 +12,7 @@ use Service\Order\Basket;
 use Service\User\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Facades\CheckoutFacade;
 
 class OrderController extends BaseController
 {
@@ -56,7 +57,7 @@ class OrderController extends BaseController
             return $this->redirect('user_authentication');
         }
 
-        (new Basket($request->getSession()))->checkout();
+        (new CheckoutFacade(new Basket($request->getSession())))->checkout();
 
         return $this->render('order/checkout.html.php');
     }
