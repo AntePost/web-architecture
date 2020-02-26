@@ -7,6 +7,9 @@ namespace Service\Product;
 use Model;
 use Model\Entity\Product;
 use Model\Repository\ProductRepository;
+use Service\Sorting\Comparators\NameComparator;
+use Service\Sorting\Comparators\PriceComparator;
+use Service\Sorting\ProductSorterService;
 
 class ProductService
 {
@@ -33,6 +36,11 @@ class ProductService
         // Применить паттерн Стратегия
         // $sortType === 'price'; // Сортировка по цене
         // $sortType === 'name'; // Сортировка по имени
+        if ($sortType === 'price') {
+            $productList = (new ProductSorterService(new PriceComparator()))->sort($productList);
+        } elseif ($sortType === 'name') {
+            $productList = (new ProductSorterService(new NameComparator()))->sort($productList);
+        }
 
         return $productList;
     }
