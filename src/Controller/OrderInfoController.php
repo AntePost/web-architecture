@@ -13,7 +13,7 @@ use Service\User\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class OrderController extends BaseController
+class OrderInfoController extends BaseController
 {
     /**
      * Корзина
@@ -21,7 +21,7 @@ class OrderController extends BaseController
      * @return Response
      * @throws Exception
      */
-    public function infoAction(Request $request): Response
+    public function action(Request $request): Response
     {
         if ($request->isMethod(Request::METHOD_POST)) {
             return $this->redirect('order_checkout');
@@ -40,24 +40,5 @@ class OrderController extends BaseController
                 'totalPrice' => $totalPrice
             ]
         );
-    }
-
-    /**
-     * Оформление заказа
-     * @param Request $request
-     * @return Response
-     * @throws BillingException
-     * @throws CommunicationException
-     */
-    public function checkoutAction(Request $request): Response
-    {
-        $isLogged = (new Security($request->getSession()))->isLogged();
-        if (!$isLogged) {
-            return $this->redirect('user_authentication');
-        }
-
-        (new Basket($request->getSession()))->checkout();
-
-        return $this->render('order/checkout.html.php');
     }
 }
