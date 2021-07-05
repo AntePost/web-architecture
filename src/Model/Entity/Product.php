@@ -57,6 +57,24 @@ class Product
         return $this->price;
     }
 
+    public function setId($id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function setName($name): self
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function setPrice($price): self
+    {
+        $this->price = $price;
+        return $this;
+    }
+
     /**
      * @return array
      */
